@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMB Madness - Final Structural Fix</title>
+    <title>DMB Madness - 5-Column Master</title>
     <link rel="manifest" href="./manifest_dmb.json">
     <style>
         :root { --cbs-blue: #004c97; --champ-red: #d90429; --bg-white: rgba(255, 255, 255, 0.9); }
@@ -12,32 +12,38 @@
             background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1920&q=80');
             background-size: cover; background-attachment: fixed;
         }
-        .page-overlay { background: var(--bg-white); min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .page-overlay { background: var(--bg-white); min-height: 100vh; padding: 10px; box-sizing: border-box; }
         .master-grid { 
-            display: grid; grid-template-columns: 1fr 260px 1fr; gap: 15px;
-            max-width: 1900px; margin: 0 auto; align-items: center;
+            display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px;
+            max-width: 2200px; margin: 0 auto; align-items: center;
         }
-        .side-container { display: flex; flex-direction: column; gap: 20px; }
-        .region-card { background: #fff; padding: 10px; border: 4px solid var(--cbs-blue); box-shadow: 8px 8px 0px rgba(0,0,0,0.1); }
-        .region-header { background: var(--cbs-blue); color: white; padding: 8px; text-align: center; text-transform: uppercase; font-size: 18px; margin-bottom: 10px; }
+        .side-container { display: flex; flex-direction: column; gap: 15px; }
+        .region-card { background: #fff; padding: 8px; border: 4px solid var(--cbs-blue); box-shadow: 6px 6px 0px rgba(0,0,0,0.1); }
+        .region-header { background: var(--cbs-blue); color: white; padding: 6px; text-align: center; text-transform: uppercase; font-size: 16px; margin-bottom: 8px; }
         
-        /* THE FIX: Explicitly defined 4-column flexbox */
-        .bracket-row { display: flex; justify-content: space-between; align-items: stretch; height: 450px; gap: 5px; }
-        .round-col { display: flex; flex-direction: column; justify-content: space-around; flex: 1; min-width: 140px; }
+        /* THE FIX: Each side now has 5 distinct columns */
+        .bracket-row { display: flex; justify-content: space-between; align-items: stretch; height: 650px; gap: 4px; }
+        .round-col { display: flex; flex-direction: column; justify-content: space-around; flex: 1; min-width: 100px; }
         
         .matchup { border: 2px solid #333; background: #fff; margin: 2px 0; display: flex; flex-direction: column; }
         .slot { 
-            padding: 5px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #eee; 
-            min-height: 28px; display: flex; align-items: center; font-weight: bold;
+            padding: 4px; font-size: 9px; cursor: pointer; border-bottom: 1px solid #eee; 
+            min-height: 22px; display: flex; align-items: center; font-weight: bold;
             font-family: "Arial Narrow", sans-serif; line-height: 1.1; word-break: break-word;
         }
         .slot.winner { background: var(--cbs-blue) !important; color: white !important; }
-        .seed { width: 16px; color: #888; font-size: 9px; margin-right: 4px; }
+        .seed { width: 14px; color: #888; font-size: 8px; margin-right: 4px; }
 
-        .center-container { text-align: center; }
-        .finals-area { background: #fff; border: 8px solid var(--champ-red); padding: 15px; }
-        .final-slot { border: 2px solid #333; margin: 5px 0; padding: 10px; font-weight: 900; cursor: pointer; min-height: 30px; }
-        .ultimate-winner { font-size: 24px; color: var(--champ-red); border-top: 4px solid #333; margin-top: 10px; padding-top: 10px; }
+        .center-container { text-align: center; display: flex; flex-direction: column; gap: 10px; }
+        .finals-area { background: #fff; border: 6px solid var(--champ-red); padding: 10px; }
+        .final-slot { border: 2px solid #333; margin: 4px 0; padding: 8px; font-weight: 900; cursor: pointer; min-height: 24px; font-size: 11px; }
+        .ultimate-winner { font-size: 20px; color: var(--champ-red); border-top: 4px solid #333; margin-top: 8px; padding-top: 8px; }
+
+        @media (max-width: 1200px) {
+            .master-grid { grid-template-columns: 1fr; }
+            .side-container { order: 2; }
+            .center-container { order: 1; margin-bottom: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -47,22 +53,28 @@
             <div class="region-card">
                 <div class="region-header">SPAC Region</div>
                 <div class="bracket-row">
-                    <div class="round-col"> <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">1</span>Ants Marching</div><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">16</span>Singing Windows</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">8</span>Stay (Wasting)</div><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">9</span>Funny It Is</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">5</span>What Would You Say</div><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">12</span>Seek Up</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">4</span>Satellite</div><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">13</span>Jimi Thing</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">6</span>Where Going</div><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">11</span>So Much To Say</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">3</span>Space Between</div><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">14</span>Best of What's Around</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">7</span>Typical Situation</div><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">10</span>You & Me</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">2</span>Crash Into Me</div><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">15</span>She</div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">1</span>Ants Marching</div><div class="slot" onclick="v(this,'SP-R2-1')"><span class="seed">16</span>Singing Windows</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">8</span>Stay (Wasting)</div><div class="slot" onclick="v(this,'SP-R2-2')"><span class="seed">9</span>Funny It Is</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">5</span>What Would You Say</div><div class="slot" onclick="v(this,'SP-R2-3')"><span class="seed">12</span>Seek Up</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">4</span>Satellite</div><div class="slot" onclick="v(this,'SP-R2-4')"><span class="seed">13</span>Jimi Thing</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-5')"><span class="seed">6</span>Where Going</div><div class="slot" onclick="v(this,'SP-R2-5')"><span class="seed">11</span>So Much To Say</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-6')"><span class="seed">3</span>Space Between</div><div class="slot" onclick="v(this,'SP-R2-6')"><span class="seed">14</span>Best of What's Around</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-7')"><span class="seed">7</span>Typical Situation</div><div class="slot" onclick="v(this,'SP-R2-7')"><span class="seed">10</span>You & Me</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'SP-R2-8')"><span class="seed">2</span>Crash Into Me</div><div class="slot" onclick="v(this,'SP-R2-8')"><span class="seed">15</span>She</div></div>
                     </div>
-                    <div class="round-col"> <div class="matchup"><div class="slot" id="SP-R2-1" onclick="v(this,'SP-R3-1')">--</div><div class="slot" id="SP-R2-2" onclick="v(this,'SP-R3-1')">--</div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="SP-R2-1" onclick="v(this,'SP-R3-1')">--</div><div class="slot" id="SP-R2-2" onclick="v(this,'SP-R3-1')">--</div></div>
                         <div class="matchup"><div class="slot" id="SP-R2-3" onclick="v(this,'SP-R3-2')">--</div><div class="slot" id="SP-R2-4" onclick="v(this,'SP-R3-2')">--</div></div>
+                        <div class="matchup"><div class="slot" id="SP-R2-5" onclick="v(this,'SP-R3-3')">--</div><div class="slot" id="SP-R2-6" onclick="v(this,'SP-R3-3')">--</div></div>
+                        <div class="matchup"><div class="slot" id="SP-R2-7" onclick="v(this,'SP-R3-4')">--</div><div class="slot" id="SP-R2-8" onclick="v(this,'SP-R3-4')">--</div></div>
                     </div>
-                    <div class="round-col"> <div class="matchup"><div class="slot" id="SP-R3-1" onclick="v(this,'SP-WIN')">--</div><div class="slot" id="SP-R3-2" onclick="v(this,'SP-WIN')">--</div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="SP-R3-1" onclick="v(this,'SP-R4-1')">--</div><div class="slot" id="SP-R3-2" onclick="v(this,'SP-R4-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="SP-R3-3" onclick="v(this,'SP-R4-2')">--</div><div class="slot" id="SP-R3-4" onclick="v(this,'SP-R4-2')">--</div></div>
                     </div>
-                    <div class="round-col"> <div class="matchup"><div class="slot" id="SP-WIN" onclick="v(this,'f1')">--</div></div>
-                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="SP-R4-1" onclick="v(this,'SP-WIN')">--</div><div class="slot" id="SP-R4-2" onclick="v(this,'SP-WIN')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="SP-WIN" onclick="v(this,'f1')">--</div></div></div>
                 </div>
             </div>
             <div class="region-card">
@@ -70,24 +82,26 @@
                 <div class="bracket-row">
                     <div class="round-col">
                         <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-1')"><span class="seed">1</span>Grey Street</div><div class="slot" onclick="v(this,'AL-R2-1')"><span class="seed">16</span>Ocean Butterfly</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-1')"><span class="seed">8</span>Grace Is Gone</div><div class="slot" onclick="v(this,'AL-R2-1')"><span class="seed">9</span>Rapunzel</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">5</span>Warehouse</div><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">12</span>Lie In Graves</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">4</span>Crush</div><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">13</span>The Stone</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">6</span>Two Step</div><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">11</span>#41</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">3</span>Madman's Eyes</div><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">14</span>Dancing Nancies</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">7</span>Stay or Leave</div><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">10</span>Bartender</div></div>
-                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">2</span>Tripping Billies</div><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">15</span>Come Tomorrow</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">8</span>Grace Is Gone</div><div class="slot" onclick="v(this,'AL-R2-2')"><span class="seed">9</span>Rapunzel</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">5</span>Warehouse</div><div class="slot" onclick="v(this,'AL-R2-3')"><span class="seed">12</span>Lie In Graves</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">4</span>Crush</div><div class="slot" onclick="v(this,'AL-R2-4')"><span class="seed">13</span>The Stone</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-5')"><span class="seed">6</span>Two Step</div><div class="slot" onclick="v(this,'AL-R2-5')"><span class="seed">11</span>#41</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-6')"><span class="seed">3</span>Madman's Eyes</div><div class="slot" onclick="v(this,'AL-R2-6')"><span class="seed">14</span>Dancing Nancies</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-7')"><span class="seed">7</span>Stay or Leave</div><div class="slot" onclick="v(this,'AL-R2-7')"><span class="seed">10</span>Bartender</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'AL-R2-8')"><span class="seed">2</span>Tripping Billies</div><div class="slot" onclick="v(this,'AL-R2-8')"><span class="seed">15</span>Come Tomorrow</div></div>
                     </div>
                     <div class="round-col">
                         <div class="matchup"><div class="slot" id="AL-R2-1" onclick="v(this,'AL-R3-1')">--</div><div class="slot" id="AL-R2-2" onclick="v(this,'AL-R3-1')">--</div></div>
                         <div class="matchup"><div class="slot" id="AL-R2-3" onclick="v(this,'AL-R3-2')">--</div><div class="slot" id="AL-R2-4" onclick="v(this,'AL-R3-2')">--</div></div>
+                        <div class="matchup"><div class="slot" id="AL-R2-5" onclick="v(this,'AL-R3-3')">--</div><div class="slot" id="AL-R2-6" onclick="v(this,'AL-R3-3')">--</div></div>
+                        <div class="matchup"><div class="slot" id="AL-R2-7" onclick="v(this,'AL-R3-4')">--</div><div class="slot" id="AL-R2-8" onclick="v(this,'AL-R3-4')">--</div></div>
                     </div>
                     <div class="round-col">
-                        <div class="matchup"><div class="slot" id="AL-R3-1" onclick="v(this,'AL-WIN')">--</div><div class="slot" id="AL-R3-2" onclick="v(this,'AL-WIN')">--</div></div>
+                        <div class="matchup"><div class="slot" id="AL-R3-1" onclick="v(this,'AL-R4-1')">--</div><div class="slot" id="AL-R3-2" onclick="v(this,'AL-R4-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="AL-R3-3" onclick="v(this,'AL-R4-2')">--</div><div class="slot" id="AL-R3-4" onclick="v(this,'AL-R4-2')">--</div></div>
                     </div>
-                    <div class="round-col">
-                        <div class="matchup"><div class="slot" id="AL-WIN" onclick="v(this,'f2')">--</div></div>
-                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="AL-R4-1" onclick="v(this,'AL-WIN')">--</div><div class="slot" id="AL-R4-2" onclick="v(this,'AL-WIN')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="AL-WIN" onclick="v(this,'f2')">--</div></div></div>
                 </div>
             </div>
         </div>
@@ -108,7 +122,61 @@
         </div>
 
         <div class="side-container">
+            <div class="region-card">
+                <div class="region-header">West Palm Region</div>
+                <div class="bracket-row" style="flex-direction: row-reverse;">
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-1')"><span class="seed">1</span>Don't Drink</div><div class="slot" onclick="v(this,'WP-R2-1')"><span class="seed">16</span>Samurai Cop</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-2')"><span class="seed">8</span>Seven</div><div class="slot" onclick="v(this,'WP-R2-2')"><span class="seed">9</span>Granny</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-3')"><span class="seed">5</span>American Baby</div><div class="slot" onclick="v(this,'WP-R2-3')"><span class="seed">12</span>Lover Lay Down</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-4')"><span class="seed">4</span>Gravedigger</div><div class="slot" onclick="v(this,'WP-R2-4')"><span class="seed">13</span>Say Goodbye</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-5')"><span class="seed">6</span>Walk Moon</div><div class="slot" onclick="v(this,'WP-R2-5')"><span class="seed">11</span>Minarets</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-6')"><span class="seed">3</span>Mercy</div><div class="slot" onclick="v(this,'WP-R2-6')"><span class="seed">14</span>Last Stop</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-7')"><span class="seed">7</span>Big Eyed Fish</div><div class="slot" onclick="v(this,'WP-R2-7')"><span class="seed">10</span>Old Dirt Hill</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'WP-R2-8')"><span class="seed">2</span>Everyday</div><div class="slot" onclick="v(this,'WP-R2-8')"><span class="seed">15</span>If Only</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="WP-R2-1" onclick="v(this,'WP-R3-1')">--</div><div class="slot" id="WP-R2-2" onclick="v(this,'WP-R3-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="WP-R2-3" onclick="v(this,'WP-R3-2')">--</div><div class="slot" id="WP-R2-4" onclick="v(this,'WP-R3-2')">--</div></div>
+                        <div class="matchup"><div class="slot" id="WP-R2-5" onclick="v(this,'WP-R3-3')">--</div><div class="slot" id="WP-R2-6" onclick="v(this,'WP-R3-3')">--</div></div>
+                        <div class="matchup"><div class="slot" id="WP-R2-7" onclick="v(this,'WP-R3-4')">--</div><div class="slot" id="WP-R2-8" onclick="v(this,'WP-R3-4')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="WP-R3-1" onclick="v(this,'WP-R4-1')">--</div><div class="slot" id="WP-R3-2" onclick="v(this,'WP-R4-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="WP-R3-3" onclick="v(this,'WP-R4-2')">--</div><div class="slot" id="WP-R3-4" onclick="v(this,'WP-R4-2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="WP-R4-1" onclick="v(this,'WP-WIN')">--</div><div class="slot" id="WP-R4-2" onclick="v(this,'WP-WIN')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="WP-WIN" onclick="v(this,'f3')">--</div></div></div>
+                </div>
             </div>
+            <div class="region-card">
+                <div class="region-header">Deer Creek Region</div>
+                <div class="bracket-row" style="flex-direction: row-reverse;">
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-1')"><span class="seed">1</span>Raven</div><div class="slot" onclick="v(this,'DC-R2-1')"><span class="seed">16</span>Sweet</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-2')"><span class="seed">8</span>One Sweet World</div><div class="slot" onclick="v(this,'DC-R2-2')"><span class="seed">9</span>Bismarck</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-3')"><span class="seed">5</span>Steady As Go</div><div class="slot" onclick="v(this,'DC-R2-3')"><span class="seed">12</span>Lying in Hands</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-4')"><span class="seed">4</span>Recently</div><div class="slot" onclick="v(this,'DC-R2-4')"><span class="seed">13</span>Idea of You</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-5')"><span class="seed">6</span>Virginia Rain</div><div class="slot" onclick="v(this,'DC-R2-5')"><span class="seed">11</span>Squirm</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-6')"><span class="seed">3</span>Captain</div><div class="slot" onclick="v(this,'DC-R2-6')"><span class="seed">14</span>Sugar Will</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-7')"><span class="seed">7</span>Halloween</div><div class="slot" onclick="v(this,'DC-R2-7')"><span class="seed">10</span>Shotgun</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'DC-R2-8')"><span class="seed">2</span>So Right</div><div class="slot" onclick="v(this,'DC-R2-8')"><span class="seed">15</span>Sleep Dream Her</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="DC-R2-1" onclick="v(this,'DC-R3-1')">--</div><div class="slot" id="DC-R2-2" onclick="v(this,'DC-R3-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="DC-R2-3" onclick="v(this,'DC-R3-2')">--</div><div class="slot" id="DC-R2-4" onclick="v(this,'DC-R3-2')">--</div></div>
+                        <div class="matchup"><div class="slot" id="DC-R2-5" onclick="v(this,'DC-R3-3')">--</div><div class="slot" id="DC-R2-6" onclick="v(this,'DC-R3-3')">--</div></div>
+                        <div class="matchup"><div class="slot" id="DC-R2-7" onclick="v(this,'DC-R3-4')">--</div><div class="slot" id="DC-R2-8" onclick="v(this,'DC-R3-4')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="DC-R3-1" onclick="v(this,'DC-R4-1')">--</div><div class="slot" id="DC-R3-2" onclick="v(this,'DC-R4-1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="DC-R3-3" onclick="v(this,'DC-R4-2')">--</div><div class="slot" id="DC-R3-4" onclick="v(this,'DC-R4-2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="DC-R4-1" onclick="v(this,'DC-WIN')">--</div><div class="slot" id="DC-R4-2" onclick="v(this,'DC-WIN')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="DC-WIN" onclick="v(this,'f4')">--</div></div></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
