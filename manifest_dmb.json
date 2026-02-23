@@ -1,7 +1,7 @@
 {
-  "name": "DMB Madness v3",
-  "short_name": "DMB v3",
-  "description": "Interactive Dave Matthews Band Tournament - Fixed 8-4-2-1 Logic",
+  "name": "DMB Madness v4",
+  "short_name": "DMB v4",
+  "description": "Interactive DMB Tournament - Full 16-8-4-2-1 Logic",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

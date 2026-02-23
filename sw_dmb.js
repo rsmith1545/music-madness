@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-var cacheName = 'dmb-madness-v3'; 
+var cacheName = 'dmb-madness-v4'; 
 var assets = [
   './',
   './index.html',
@@ -8,7 +8,6 @@ var assets = [
 ];
 
 self.addEventListener('install', function(event) {
-  // This forces the new version to take over immediately
   self.skipWaiting(); 
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
