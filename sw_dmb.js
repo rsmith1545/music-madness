@@ -1,14 +1,40 @@
-var cacheName = 'dmb-madness-v2';
-var assets = ['./', './index.html', './manifest_dmb.json'];
-self.addEventListener('install', function(e) {
-  e.waitUntil(caches.open(cacheName).then(function(c) { return c.addAll(assets); }));
-  self.skipWaiting();
+/* eslint-disable no-undef */
+var cacheName = 'dmb-madness-v3'; 
+var assets = [
+  './',
+  './index.html',
+  './manifest_dmb.json',
+  'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1920&q=80'
+];
+
+self.addEventListener('install', function(event) {
+  // This forces the new version to take over immediately
+  self.skipWaiting(); 
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(assets);
+    })
+  );
 });
-self.addEventListener('activate', function(e) {
-  e.waitUntil(caches.keys().then(function(ks) {
-    return Promise.all(ks.map(function(k) { if(k !== cacheName) return caches.delete(k); }));
-  }));
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.filter(function(key) {
+          return key !== cacheName;
+        }).map(function(key) {
+          return caches.delete(key);
+        })
+      );
+    })
+  );
 });
-self.addEventListener('fetch', function(e) {
-  e.respondWith(caches.match(e.request).then(function(r) { return r || fetch(e.request); }));
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
+    })
+  );
 });

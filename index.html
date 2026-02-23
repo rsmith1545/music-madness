@@ -3,30 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMB Madness - v2 Master</title>
+    <title>DMB Madness - v3 Final</title>
+    
     <link rel="manifest" href="./manifest_dmb.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#004c97">
+
     <style>
-        :root { --cbs-blue: #004c97; --champ-red: #d90429; --bg-overlay: rgba(255, 255, 255, 0.9); }
-        body { font-family: "Impact", sans-serif; margin: 0; padding: 0; background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-attachment: fixed; }
-        .page-overlay { background: var(--bg-overlay); min-height: 100vh; padding: 10px; }
-        .master-grid { display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px; max-width: 1800px; margin: 0 auto; align-items: center; }
+        :root { 
+            --cbs-blue: #004c97; 
+            --champ-red: #d90429;
+            --bg-overlay: rgba(255, 255, 255, 0.9);
+        }
+
+        body { 
+            font-family: "Impact", sans-serif; 
+            margin: 0; padding: 0; 
+            background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-attachment: fixed;
+            -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+        }
+
+        .page-overlay { background: var(--bg-overlay); min-height: 100vh; padding: 10px; box-sizing: border-box; }
+
+        .master-grid { 
+            display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px;
+            max-width: 1800px; margin: 0 auto; align-items: center;
+        }
+        
         .side-container { display: grid; grid-template-rows: 1fr 1fr; height: 950px; gap: 10px; }
         .region-card { background: #fff; padding: 6px; border: 4px solid var(--cbs-blue); box-shadow: 6px 6px 0px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .region-header { background: var(--cbs-blue); color: white; padding: 4px; text-align: center; text-transform: uppercase; font-size: 14px; margin-bottom: 5px; }
+        
         .bracket-row { display: flex; justify-content: space-between; align-items: center; gap: 4px; flex-grow: 1; }
         .round-col { display: flex; flex-direction: column; justify-content: space-around; height: 100%; }
-        .matchup { display: flex; flex-direction: column; width: 155px; border: 2px solid #333; background: #fff; margin-bottom: 2px; }
-        .slot { padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; display: flex; align-items: center; min-height: 24px; font-weight: bold; font-family: "Arial Narrow", sans-serif; line-height: 1.1; word-break: break-word; color: #000; }
+        
+        .matchup { display: flex; flex-direction: column; width: 155px; border: 2px solid #333; background: #fff; }
+        .slot { 
+            padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; 
+            display: flex; align-items: center; min-height: 24px; font-weight: bold; 
+            font-family: "Arial Narrow", Arial, sans-serif; line-height: 1.1; word-break: break-word; color: #000;
+        }
         .slot.winner { background: var(--cbs-blue) !important; color: white !important; }
         .seed { width: 14px; color: #777; font-size: 9px; margin-right: 4px; flex-shrink: 0; }
+
         .center-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .header-section { text-align: center; background: #fff; padding: 10px; border: 5px double var(--cbs-blue); width: 100%; }
+        .bracket-title { font-size: 26px; border-bottom: 3px solid var(--champ-red); display: block; color: var(--cbs-blue); }
+
         .finals-area { background: white; padding: 10px; border: 6px solid var(--champ-red); text-align: center; width: 100%; }
         .final-header { background: var(--cbs-blue); color: white; padding: 3px; font-size: 11px; }
         .final-slot { padding: 8px; font-weight: 900; cursor: pointer; text-align: center; font-size: 11px; min-height: 24px; border: 1px solid #333; margin: 2px 0; }
         .ultimate-winner { font-size: 1.5rem; color: var(--champ-red); margin-top: 5px; border-top: 4px solid var(--champ-red); padding-top: 5px; }
+
+        @media print {
+            @page { size: landscape; margin: 0; }
+            html, body { overflow: hidden; }
+            .master-grid { transform: scale(0.65); transform-origin: top center; width: 153% !important; margin: 0 auto !important; }
+        }
     </style>
 </head>
 <body>
+
 <div class="page-overlay">
     <div class="master-grid">
         <div class="side-container">
@@ -51,6 +90,7 @@
                     <div class="round-col"><div class="matchup"><div class="slot" id="SP-WIN" onclick="v(this,'f1')">--</div></div></div>
                 </div>
             </div>
+
             <div class="region-card">
                 <div class="region-header">Alpine Region</div>
                 <div class="bracket-row">
@@ -136,20 +176,30 @@
         </div>
     </div>
 </div>
+
 <script>
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw_dmb.js'); }
+    if ('serviceWorker' in navigator) { 
+        navigator.serviceWorker.register('./sw_dmb.js'); 
+    }
+
     function v(el, tId) {
         if(el.innerText.includes("--") || el.innerText.trim() === "") return;
-        el.parentElement.querySelectorAll('.slot').forEach(s => s.classList.remove('winner'));
+        
+        // Remove 'winner' highlight from sibling in the same matchup
+        const p = el.parentElement;
+        Array.from(p.children).forEach(c => c.classList.remove('winner'));
         el.classList.add('winner');
-        const s = el.innerText.replace(/^\d+\s*/, '').trim();
-        const t = document.getElementById(tId);
-        if(!t) {
-            if(tId === 'ultimate') document.getElementById('ultimate').innerText = s;
+        
+        const song = el.innerText.replace(/^\d+\s*/, '').trim();
+        const target = document.getElementById(tId);
+        
+        if(!target) {
+            if(tId === 'ultimate') document.getElementById('ultimate').innerText = song;
             return;
         }
-        t.innerText = s;
-        t.classList.remove('winner');
+        
+        target.innerText = song;
+        target.classList.remove('winner');
     }
 </script>
 </body>
