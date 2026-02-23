@@ -3,34 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FT FTHC Madness - Final Logic</title>
+    <title>FT FTHC Madness - Complete Master</title>
+    
     <link rel="manifest" href="./manifest.json">
-    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }</script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png">
+    <meta name="theme-color" content="#d90429">
+
     <style>
-        :root { --ft-red: #d90429; --ft-black: #000000; --ft-silver: #adb5bd; --bg-overlay: rgba(173, 181, 189, 0.9); }
-        body { font-family: "Impact", sans-serif; margin: 0; padding: 0; background-color: var(--ft-silver); background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png'); background-size: 600px auto; background-position: center 280px; background-repeat: no-repeat; background-attachment: fixed; }
-        .page-overlay { background: var(--bg-overlay); min-height: 100vh; padding: 10px; }
-        .master-grid { display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px; max-width: 1800px; margin: 0 auto; align-items: center; }
+        :root { 
+            --ft-red: #d90429; 
+            --ft-black: #000000;
+            --ft-silver: #adb5bd;
+            --bg-overlay: rgba(173, 181, 189, 0.9);
+        }
+
+        body { 
+            font-family: "Impact", sans-serif; 
+            margin: 0; padding: 0; background-color: var(--ft-silver);
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png');
+            background-size: 600px auto; background-position: center 280px;
+            background-repeat: no-repeat; background-attachment: fixed;
+            -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+        }
+
+        .page-overlay { background: var(--bg-overlay); min-height: 100vh; padding: 10px; box-sizing: border-box; }
+
+        .master-grid { 
+            display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px;
+            max-width: 1800px; margin: 0 auto; align-items: center;
+        }
+        
         .side-container { display: grid; grid-template-rows: 1fr 1fr; height: 950px; gap: 10px; }
         .region-card { background: #fff; padding: 6px; border: 4px solid var(--ft-black); box-shadow: 6px 6px 0px var(--ft-red); display: flex; flex-direction: column; }
         .region-header { background: var(--ft-black); color: white; padding: 4px; text-align: center; text-transform: uppercase; font-size: 14px; margin-bottom: 5px; }
+        
         .bracket-row { display: flex; justify-content: space-between; align-items: center; gap: 4px; flex-grow: 1; }
         .round-col { display: flex; flex-direction: column; justify-content: space-around; height: 100%; }
+        
         .matchup { display: flex; flex-direction: column; width: 155px; border: 2.5px solid var(--ft-black); background: #fff; }
-        .slot { padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; display: flex; align-items: center; min-height: 24px; font-weight: bold; font-family: "Arial Narrow", sans-serif; line-height: 1.1; word-break: break-word; color: #000; }
+        .slot { 
+            padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; 
+            display: flex; align-items: center; min-height: 24px; font-weight: bold; 
+            font-family: "Arial Narrow", Arial, sans-serif; line-height: 1.1; word-break: break-word; color: #000;
+        }
         .slot.winner { background: var(--ft-red) !important; color: white !important; }
         .seed { width: 14px; color: #777; font-size: 9px; margin-right: 4px; flex-shrink: 0; }
+
         .center-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .header-section { text-align: center; background: #fff; padding: 10px; border: 5px double var(--ft-black); width: 100%; }
         .bracket-title { font-size: 26px; border-bottom: 3px solid var(--ft-red); display: block; }
+        .btn-print { margin-top: 10px; padding: 8px 15px; cursor: pointer; border: 2px solid var(--ft-black); color: white; background: var(--ft-black); font-size: 11px; text-transform: uppercase; font-weight: bold; }
+
         .finals-area { background: white; padding: 10px; border: 6px solid var(--ft-black); text-align: center; width: 100%; }
         .final-header { background: var(--ft-red); color: white; padding: 3px; font-size: 11px; }
         .final-matchup { background: white; border: 2px solid var(--ft-black); margin: 3px 0; }
         .final-slot { padding: 8px; font-weight: 900; cursor: pointer; text-align: center; font-size: 11px; min-height: 24px; }
         .ultimate-winner { font-size: 1.5rem; color: var(--ft-red); margin-top: 5px; border-top: 4px solid var(--ft-black); padding-top: 5px; }
+
+        @media print {
+            @page { size: landscape; margin: 0; }
+            html, body { overflow: hidden; }
+            .btn-print { display: none; }
+            .master-grid { transform: scale(0.65); transform-origin: top center; width: 153% !important; margin: 0 auto !important; }
+        }
     </style>
 </head>
 <body>
+
 <div class="page-overlay">
     <div class="master-grid">
         <div class="side-container">
@@ -51,10 +92,15 @@
                         <div class="matchup"><div class="slot" id="W-R2-M1" onclick="v(this,'W-R3-M1')">--</div><div class="slot" id="W-R2-M2" onclick="v(this,'W-R3-M1')">--</div></div>
                         <div class="matchup"><div class="slot" id="W-R2-M3" onclick="v(this,'W-R3-M2')">--</div><div class="slot" id="W-R2-M4" onclick="v(this,'W-R3-M2')">--</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="W-R3-M1" onclick="v(this,'W-Winner')">--</div><div class="slot" id="W-R3-M2" onclick="v(this,'W-Winner')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="W-Winner" onclick="v(this,'f1')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="W-R3-M1" onclick="v(this,'W-Winner')">--</div><div class="slot" id="W-R3-M2" onclick="v(this,'W-Winner')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="W-Winner" onclick="v(this,'f1')">--</div></div>
+                    </div>
                 </div>
             </div>
+
             <div class="region-card">
                 <div class="region-header">Love & Ire Region</div>
                 <div class="bracket-row">
@@ -72,14 +118,21 @@
                         <div class="matchup"><div class="slot" id="LI-R2-M1" onclick="v(this,'LI-R3-M1')">--</div><div class="slot" id="LI-R2-M2" onclick="v(this,'LI-R3-M1')">--</div></div>
                         <div class="matchup"><div class="slot" id="LI-R2-M3" onclick="v(this,'LI-R3-M2')">--</div><div class="slot" id="LI-R2-M4" onclick="v(this,'LI-R3-M2')">--</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="LI-R3-M1" onclick="v(this,'LI-Winner')">--</div><div class="slot" id="LI-R3-M2" onclick="v(this,'LI-Winner')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="LI-Winner" onclick="v(this,'f2')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="LI-R3-M1" onclick="v(this,'LI-Winner')">--</div><div class="slot" id="LI-R3-M2" onclick="v(this,'LI-Winner')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="LI-Winner" onclick="v(this,'f2')">--</div></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="center-container">
-            <div class="header-section"><span class="bracket-title">FRANK TURNER</span></div>
+            <div class="header-section">
+                <span class="bracket-title">FRANK TURNER</span>
+                <button class="btn-print" onclick="window.print()">Print Bracket</button>
+            </div>
             <div class="finals-area">
                 <div class="final-header">FINAL FOUR</div>
                 <div class="final-matchup"><div class="final-slot" id="f1" onclick="v(this,'c1')">Wessex</div><div class="final-slot" id="f2" onclick="v(this,'c1')">Love & Ire</div></div>
@@ -109,10 +162,15 @@
                         <div class="matchup"><div class="slot" id="TD-R2-M1" onclick="v(this,'TD-R3-M1')">--</div><div class="slot" id="TD-R2-M2" onclick="v(this,'TD-R3-M1')">--</div></div>
                         <div class="matchup"><div class="slot" id="TD-R2-M3" onclick="v(this,'TD-R3-M2')">--</div><div class="slot" id="TD-R2-M4" onclick="v(this,'TD-R3-M2')">--</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="TD-R3-M1" onclick="v(this,'TD-Winner')">--</div><div class="slot" id="TD-R3-M2" onclick="v(this,'TD-Winner')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="TD-Winner" onclick="v(this,'f3')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="TD-R3-M1" onclick="v(this,'TD-Winner')">--</div><div class="slot" id="TD-R3-M2" onclick="v(this,'TD-Winner')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="TD-Winner" onclick="v(this,'f3')">--</div></div>
+                    </div>
                 </div>
             </div>
+
             <div class="region-card">
                 <div class="region-header">Hardcore Region</div>
                 <div class="bracket-row" style="flex-direction: row-reverse;">
@@ -123,32 +181,50 @@
                         <div class="matchup"><div class="slot" onclick="v(this,'HC-R2-M2')"><span class="seed">4</span>Long Live Queen</div><div class="slot" onclick="v(this,'HC-R2-M2')"><span class="seed">13</span>Non Serviam</div></div>
                         <div class="matchup"><div class="slot" onclick="v(this,'HC-R2-M3')"><span class="seed">6</span>Substitute</div><div class="slot" onclick="v(this,'HC-R2-M3')"><span class="seed">11</span>Rivers</div></div>
                         <div class="matchup"><div class="slot" onclick="v(this,'HC-R2-M3')"><span class="seed">3</span>Be More Kind</div><div class="slot" onclick="v(this,'HC-R2-M3')"><span class="seed">14</span>Richard Divine</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'HC-R2-M4')"><span class="seed">7</span>Love Forty Down</div><div class="slot" onclick="adv(this,'HC-R2-M4')"><span class="seed">10</span>The Real Damage</div></div>
+                        <div class="matchup"><div class="slot" onclick="v(this,'HC-R2-M4')"><span class="seed">7</span>Love Forty Down</div><div class="slot" onclick="v(this,'HC-R2-M4')"><span class="seed">10</span>The Real Damage</div></div>
                         <div class="matchup"><div class="slot" onclick="v(this,'HC-R2-M4')"><span class="seed">2</span>Ballad of Me..</div><div class="slot" onclick="v(this,'HC-R2-M4')"><span class="seed">15</span>Imperfect Tense</div></div>
                     </div>
                     <div class="round-col">
                         <div class="matchup"><div class="slot" id="HC-R2-M1" onclick="v(this,'HC-R3-M1')">--</div><div class="slot" id="HC-R2-M2" onclick="v(this,'HC-R3-M1')">--</div></div>
                         <div class="matchup"><div class="slot" id="HC-R2-M3" onclick="v(this,'HC-R3-M2')">--</div><div class="slot" id="HC-R2-M4" onclick="v(this,'HC-R3-M2')">--</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="HC-R3-M1" onclick="v(this,'HC-Winner')">--</div><div class="slot" id="HC-R3-M2" onclick="v(this,'HC-Winner')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" id="HC-Winner" onclick="v(this,'f4')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="HC-R3-M1" onclick="v(this,'HC-Winner')">--</div><div class="slot" id="HC-R3-M2" onclick="v(this,'HC-Winner')">--</div></div>
+                    </div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="HC-Winner" onclick="v(this,'f4')">--</div></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+    }
+
     function v(el, tId) {
+        // Prevent interaction with empty slots
         if(el.innerText.includes("--") || el.innerText.trim() === "") return;
+        
+        // Visual highlight for selection
         const p = el.parentElement;
         Array.from(p.children).forEach(c => c.classList.remove('winner'));
         el.classList.add('winner');
+        
+        // Clean song name for advancement
         const s = el.innerText.replace(/^\d+\s*/, '').trim();
         const t = document.getElementById(tId);
+        
+        // Handle Final Winner transition
         if(!t) {
             if(tId === 'ultimate') document.getElementById('ultimate').innerText = s;
             return;
         }
+        
+        // Advance song to next slot
         t.innerText = s;
         t.classList.remove('winner');
     }
