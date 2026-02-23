@@ -1,0 +1,15 @@
+{
+  "name": "Frank Turner Madness",
+  "short_name": "FT Madness",
+  "start_url": "Frank_Turner_Madness.html",
+  "display": "standalone",
+  "background_color": "#adb5bd",
+  "theme_color": "#d90429",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
