@@ -3,75 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FT FTHC Madness</title>
-    
+    <title>FT FTHC Madness - Fixed Logic</title>
     <link rel="manifest" href="./manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png">
-    <meta name="theme-color" content="#d90429">
-
+    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }</script>
     <style>
-        :root { 
-            --ft-red: #d90429; 
-            --ft-black: #000000;
-            --ft-silver: #adb5bd;
-            --bg-overlay: rgba(173, 181, 189, 0.9);
-        }
-
-        body { 
-            font-family: "Impact", sans-serif; 
-            margin: 0; padding: 0; background-color: var(--ft-silver);
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png');
-            background-size: 600px auto; background-position: center 280px;
-            background-repeat: no-repeat; background-attachment: fixed;
-            -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
-        }
-
+        :root { --ft-red: #d90429; --ft-black: #000000; --ft-silver: #adb5bd; --bg-overlay: rgba(173, 181, 189, 0.9); }
+        body { font-family: "Impact", sans-serif; margin: 0; padding: 0; background-color: var(--ft-silver); background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Frank_Turner_silhouette.png'); background-size: 600px auto; background-position: center 280px; background-repeat: no-repeat; background-attachment: fixed; }
         .page-overlay { background: var(--bg-overlay); min-height: 100vh; padding: 10px; }
-
-        .master-grid { 
-            display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px;
-            max-width: 1800px; margin: 0 auto; align-items: center;
-        }
-        
+        .master-grid { display: grid; grid-template-columns: 1fr 240px 1fr; gap: 10px; max-width: 1800px; margin: 0 auto; align-items: center; }
         .side-container { display: grid; grid-template-rows: 1fr 1fr; height: 900px; gap: 10px; }
         .region-card { background: #fff; padding: 6px; border: 4px solid var(--ft-black); box-shadow: 6px 6px 0px var(--ft-red); display: flex; flex-direction: column; }
         .region-header { background: var(--ft-black); color: white; padding: 4px; text-align: center; text-transform: uppercase; font-size: 14px; margin-bottom: 5px; }
-        
         .bracket-row { display: flex; justify-content: space-between; align-items: center; gap: 4px; flex-grow: 1; }
         .round-col { display: flex; flex-direction: column; justify-content: space-around; height: 100%; }
-        
         .matchup { display: flex; flex-direction: column; width: 155px; border: 2.5px solid var(--ft-black); background: #fff; }
-        .slot { 
-            padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; 
-            display: flex; align-items: center; min-height: 24px; font-weight: bold; 
-            font-family: "Arial Narrow", Arial, sans-serif; line-height: 1.1; word-break: break-word; color: #000;
-        }
+        .slot { padding: 4px 6px; font-size: 10px; cursor: pointer; border-bottom: 1px solid #ddd; display: flex; align-items: center; min-height: 24px; font-weight: bold; font-family: "Arial Narrow", sans-serif; line-height: 1.1; word-break: break-word; color: #000; }
         .slot.winner { background: var(--ft-red) !important; color: white !important; }
         .seed { width: 14px; color: #777; font-size: 9px; margin-right: 4px; flex-shrink: 0; }
-
         .center-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .header-section { text-align: center; background: #fff; padding: 10px; border: 5px double var(--ft-black); width: 100%; }
         .bracket-title { font-size: 26px; border-bottom: 3px solid var(--ft-red); display: block; }
-        .btn-print { margin-top: 10px; padding: 8px 15px; cursor: pointer; border: 2px solid var(--ft-black); color: white; background: var(--ft-black); font-size: 11px; text-transform: uppercase; font-weight: bold; }
-
         .finals-area { background: white; padding: 10px; border: 6px solid var(--ft-black); text-align: center; width: 100%; }
         .final-header { background: var(--ft-red); color: white; padding: 3px; font-size: 11px; }
         .final-matchup { background: white; border: 2px solid var(--ft-black); margin: 3px 0; }
-        .final-slot { padding: 8px; font-weight: 900; cursor: pointer; text-align: center; font-size: 11px; min-height: 24px; font-family: "Arial Narrow", sans-serif; }
+        .final-slot { padding: 8px; font-weight: 900; cursor: pointer; text-align: center; font-size: 11px; min-height: 24px; }
         .ultimate-winner { font-size: 1.5rem; color: var(--ft-red); margin-top: 5px; border-top: 4px solid var(--ft-black); padding-top: 5px; }
-
-        @media print {
-            @page { size: landscape; margin: 0; }
-            html, body { overflow: hidden; }
-            .btn-print { display: none; }
-            .master-grid { transform: scale(0.65); transform-origin: top center; width: 153% !important; margin: 0 auto !important; }
-        }
     </style>
 </head>
 <body>
-
 <div class="page-overlay">
     <div class="master-grid">
         <div class="side-container">
@@ -79,42 +38,48 @@
                 <div class="region-header">Wessex Region</div>
                 <div class="bracket-row">
                     <div class="round-col">
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">1</span>Recovery</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">16</span>Nights Become Days</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">8</span>Mittens</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">9</span>Good & Gone</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">5</span>I Am Disappeared</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">12</span>The Gathering</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">4</span>Reasons Not to Be..</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">13</span>Punches</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">6</span>Don't Worry</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">11</span>Redemption</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">3</span>If Ever I Stray</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">14</span>Oh Brother</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">7</span>Glorious You</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">10</span>Wanderlust</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f1')"><span class="seed">2</span>Photosynthesis</div><div class="slot" onclick="adv(this,'f1')"><span class="seed">15</span>Better Half</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m1')"><span class="seed">1</span>Recovery</div><div class="slot" onclick="adv(this,'wes-r2-m1')"><span class="seed">16</span>Nights Become Days</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m1')"><span class="seed">8</span>Mittens</div><div class="slot" onclick="adv(this,'wes-r2-m1')"><span class="seed">9</span>Good & Gone</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m2')"><span class="seed">5</span>I Am Disappeared</div><div class="slot" onclick="adv(this,'wes-r2-m2')"><span class="seed">12</span>The Gathering</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m2')"><span class="seed">4</span>Reasons Not to Be..</div><div class="slot" onclick="adv(this,'wes-r2-m2')"><span class="seed">13</span>Punches</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m3')"><span class="seed">6</span>Don't Worry</div><div class="slot" onclick="adv(this,'wes-r2-m3')"><span class="seed">11</span>Redemption</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m3')"><span class="seed">3</span>If Ever I Stray</div><div class="slot" onclick="adv(this,'wes-r2-m3')"><span class="seed">14</span>Oh Brother</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m4')"><span class="seed">7</span>Glorious You</div><div class="slot" onclick="adv(this,'wes-r2-m4')"><span class="seed">10</span>Wanderlust</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'wes-r2-m4')"><span class="seed">2</span>Photosynthesis</div><div class="slot" onclick="adv(this,'wes-r2-m4')"><span class="seed">15</span>Better Half</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f1')">--</div><div class="slot" onclick="adv(this,'f1')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="wes-r2-m1" onclick="adv(this,'wes-r3-m1')">--</div><div class="slot" id="wes-r2-m2" onclick="adv(this,'wes-r3-m1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="wes-r2-m3" onclick="adv(this,'wes-r3-m2')">--</div><div class="slot" id="wes-r2-m4" onclick="adv(this,'wes-r3-m2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="wes-r3-m1" onclick="adv(this,'wes-r4-m1')">--</div><div class="slot" id="wes-r3-m2" onclick="adv(this,'wes-r4-m1')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="wes-r4-m1" onclick="adv(this,'f1')">--</div></div></div>
                 </div>
             </div>
             <div class="region-card">
                 <div class="region-header">Love & Ire Region</div>
                 <div class="bracket-row">
                     <div class="round-col">
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">1</span>The Way I Tend To Be</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">16</span>Miranda</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">8</span>There She Is</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">9</span>Tattoos</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">5</span>Wessex Boy</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">12</span>Josephine</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">4</span>Losing Days</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">13</span>Survival Blues</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">6</span>Little Changes</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">11</span>Wave Across A Bay</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">3</span>1933</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">14</span>Going Nowhere</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">7</span>Opening Act..</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">10</span>Eulogy</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f2')"><span class="seed">2</span>Plain Sailing Weather</div><div class="slot" onclick="adv(this,'f2')"><span class="seed">15</span>Broken Piano</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m1')"><span class="seed">1</span>The Way I Tend To Be</div><div class="slot" onclick="adv(this,'li-r2-m1')"><span class="seed">16</span>Miranda</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m1')"><span class="seed">8</span>There She Is</div><div class="slot" onclick="adv(this,'li-r2-m1')"><span class="seed">9</span>Tattoos</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m2')"><span class="seed">5</span>Wessex Boy</div><div class="slot" onclick="adv(this,'li-r2-m2')"><span class="seed">12</span>Josephine</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m2')"><span class="seed">4</span>Losing Days</div><div class="slot" onclick="adv(this,'li-r2-m2')"><span class="seed">13</span>Survival Blues</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m3')"><span class="seed">6</span>Little Changes</div><div class="slot" onclick="adv(this,'li-r2-m3')"><span class="seed">11</span>Wave Across A Bay</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m3')"><span class="seed">3</span>1933</div><div class="slot" onclick="adv(this,'li-r2-m3')"><span class="seed">14</span>Going Nowhere</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m4')"><span class="seed">7</span>Opening Act..</div><div class="slot" onclick="adv(this,'li-r2-m4')"><span class="seed">10</span>Eulogy</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'li-r2-m4')"><span class="seed">2</span>Plain Sailing Weather</div><div class="slot" onclick="adv(this,'li-r2-m4')"><span class="seed">15</span>Broken Piano</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f2')">--</div><div class="slot" onclick="adv(this,'f2')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="li-r2-m1" onclick="adv(this,'li-r3-m1')">--</div><div class="slot" id="li-r2-m2" onclick="adv(this,'li-r3-m1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="li-r2-m3" onclick="adv(this,'li-r3-m2')">--</div><div class="slot" id="li-r2-m4" onclick="adv(this,'li-r3-m2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="li-r3-m1" onclick="adv(this,'li-r4-m1')">--</div><div class="slot" id="li-r3-m2" onclick="adv(this,'li-r4-m1')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="li-r4-m1" onclick="adv(this,'f2')">--</div></div></div>
                 </div>
             </div>
         </div>
 
         <div class="center-container">
-            <div class="header-section"><span class="bracket-title">FRANK TURNER</span><button class="btn-print" onclick="window.print()">Print Bracket</button></div>
+            <div class="header-section"><span class="bracket-title">FRANK TURNER</span></div>
             <div class="finals-area">
                 <div class="final-header">FINAL FOUR</div>
                 <div class="final-matchup"><div class="final-slot" id="f1" onclick="advFinal(this,'c1')">Wessex</div><div class="final-slot" id="f2" onclick="advFinal(this,'c1')">Love & Ire</div></div>
@@ -131,72 +96,66 @@
                 <div class="region-header">Tape Deck Region</div>
                 <div class="bracket-row" style="flex-direction: row-reverse;">
                     <div class="round-col">
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">1</span>Get Better</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">16</span>English Curse</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">8</span>America Great..</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">9</span>Glory Hallelujah</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">5</span>Knew Prufrock..</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">12</span>To Take You Home</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">4</span>The Next Storm</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">13</span>Demons</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">6</span>Love Ire & Song</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">11</span>Fisher King Blues</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">3</span>Polaroid Picture</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">14</span>Out Of Breath</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">7</span>Puntarelle</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">10</span>Modern Leper</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f3')"><span class="seed">2</span>Four Simple Words</div><div class="slot" onclick="adv(this,'f3')"><span class="seed">15</span>Angel Islington</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m1')"><span class="seed">1</span>Get Better</div><div class="slot" onclick="adv(this,'td-r2-m1')"><span class="seed">16</span>English Curse</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m1')"><span class="seed">8</span>America Great..</div><div class="slot" onclick="adv(this,'td-r2-m1')"><span class="seed">9</span>Glory Hallelujah</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m2')"><span class="seed">5</span>Knew Prufrock..</div><div class="slot" onclick="adv(this,'td-r2-m2')"><span class="seed">12</span>To Take You Home</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m2')"><span class="seed">4</span>The Next Storm</div><div class="slot" onclick="adv(this,'td-r2-m2')"><span class="seed">13</span>Demons</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m3')"><span class="seed">6</span>Love Ire & Song</div><div class="slot" onclick="adv(this,'td-r2-m3')"><span class="seed">11</span>Fisher King Blues</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m3')"><span class="seed">3</span>Polaroid Picture</div><div class="slot" onclick="adv(this,'td-r2-m3')"><span class="seed">14</span>Out Of Breath</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m4')"><span class="seed">7</span>Puntarelle</div><div class="slot" onclick="adv(this,'td-r2-m4')"><span class="seed">10</span>Modern Leper</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'td-r2-m4')"><span class="seed">2</span>Four Simple Words</div><div class="slot" onclick="adv(this,'td-r2-m4')"><span class="seed">15</span>Angel Islington</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f3')">--</div><div class="slot" onclick="adv(this,'f3')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="td-r2-m1" onclick="adv(this,'td-r3-m1')">--</div><div class="slot" id="td-r2-m2" onclick="adv(this,'td-r3-m1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="td-r2-m3" onclick="adv(this,'td-r3-m2')">--</div><div class="slot" id="td-r2-m4" onclick="adv(this,'td-r3-m2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="td-r3-m1" onclick="adv(this,'td-r4-m1')">--</div><div class="slot" id="td-r3-m2" onclick="adv(this,'td-r4-m1')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="td-r4-m1" onclick="adv(this,'f3')">--</div></div></div>
                 </div>
             </div>
             <div class="region-card">
                 <div class="region-header">Hardcore Region</div>
                 <div class="bracket-row" style="flex-direction: row-reverse;">
                     <div class="round-col">
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">1</span>I Still Believe</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">16</span>Do One</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">8</span>Tell Tale Signs</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">9</span>One Foot Before..</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">5</span>Peggy Sang Blues</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">12</span>Anymore</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">4</span>Long Live Queen</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">13</span>Non Serviam</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">6</span>Substitute</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">11</span>Rivers</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">3</span>Be More Kind</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">14</span>Richard Divine</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">7</span>Love Forty Down</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">10</span>The Real Damage</div></div>
-                        <div class="matchup"><div class="slot" onclick="adv(this,'f4')"><span class="seed">2</span>Ballad of Me..</div><div class="slot" onclick="adv(this,'f4')"><span class="seed">15</span>Imperfect Tense</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m1')"><span class="seed">1</span>I Still Believe</div><div class="slot" onclick="adv(this,'hc-r2-m1')"><span class="seed">16</span>Do One</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m1')"><span class="seed">8</span>Tell Tale Signs</div><div class="slot" onclick="adv(this,'hc-r2-m1')"><span class="seed">9</span>One Foot Before..</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m2')"><span class="seed">5</span>Peggy Sang Blues</div><div class="slot" onclick="adv(this,'hc-r2-m2')"><span class="seed">12</span>Anymore</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m2')"><span class="seed">4</span>Long Live Queen</div><div class="slot" onclick="adv(this,'hc-r2-m2')"><span class="seed">13</span>Non Serviam</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m3')"><span class="seed">6</span>Substitute</div><div class="slot" onclick="adv(this,'hc-r2-m3')"><span class="seed">11</span>Rivers</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m3')"><span class="seed">3</span>Be More Kind</div><div class="slot" onclick="adv(this,'hc-r2-m3')"><span class="seed">14</span>Richard Divine</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m4')"><span class="seed">7</span>Love Forty Down</div><div class="slot" onclick="adv(this,'hc-r2-m4')"><span class="seed">10</span>The Real Damage</div></div>
+                        <div class="matchup"><div class="slot" onclick="adv(this,'hc-r2-m4')"><span class="seed">2</span>Ballad of Me..</div><div class="slot" onclick="adv(this,'hc-r2-m4')"><span class="seed">15</span>Imperfect Tense</div></div>
                     </div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div></div>
-                    <div class="round-col"><div class="matchup"><div class="slot" onclick="adv(this,'f4')">--</div><div class="slot" onclick="adv(this,'f4')">--</div></div></div>
+                    <div class="round-col">
+                        <div class="matchup"><div class="slot" id="hc-r2-m1" onclick="adv(this,'hc-r3-m1')">--</div><div class="slot" id="hc-r2-m2" onclick="adv(this,'hc-r3-m1')">--</div></div>
+                        <div class="matchup"><div class="slot" id="hc-r2-m3" onclick="adv(this,'hc-r3-m2')">--</div><div class="slot" id="hc-r2-m4" onclick="adv(this,'hc-r3-m2')">--</div></div>
+                    </div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="hc-r3-m1" onclick="adv(this,'hc-r4-m1')">--</div><div class="slot" id="hc-r3-m2" onclick="adv(this,'hc-r4-m1')">--</div></div></div>
+                    <div class="round-col"><div class="matchup"><div class="slot" id="hc-r4-m1" onclick="adv(this,'f4')">--</div></div></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-  }
-
-  window.adv = function(el, targetId) {
-    if(el.innerText.includes("--") || el.innerText.trim() === "") return;
-    const parent = el.parentElement;
-    Array.from(parent.children).forEach(c => c.classList.remove('winner'));
-    el.classList.add('winner');
-    const songName = el.innerText.replace(/^\d+\s*/, '').trim();
-    const nextCol = parent.parentElement.nextElementSibling || parent.parentElement.previousElementSibling;
-    if (nextCol && nextCol.classList.contains('round-col')) {
-        const indexInCol = Array.from(parent.parentElement.children).indexOf(parent);
-        const targetMatchup = nextCol.children[Math.floor(indexInCol / 2)];
-        const targetSlot = targetMatchup.children[indexInCol % 2];
-        targetSlot.innerText = songName;
-        targetSlot.classList.remove('winner');
-    } else {
-        document.getElementById(targetId).innerText = songName;
+    function adv(el, targetId) {
+        if(el.innerText.includes("--") || el.innerText.trim() === "") return;
+        const parent = el.parentElement;
+        Array.from(parent.children).forEach(c => c.classList.remove('winner'));
+        el.classList.add('winner');
+        const songName = el.innerText.replace(/^\d+\s*/, '').trim();
+        const target = document.getElementById(targetId);
+        target.innerText = songName;
+        target.classList.remove('winner');
     }
-  }
-
-  window.advFinal = function(el, nextId) {
-    if(el.innerText.length < 3) return;
-    Array.from(el.parentElement.children).forEach(c => c.classList.remove('winner'));
-    el.classList.add('winner');
-    if(nextId === 'ultimate') document.getElementById('ultimate').innerText = el.innerText;
-    else document.getElementById(nextId).innerText = el.innerText;
-  }
+    function advFinal(el, nextId) {
+        if(el.innerText.length < 3 || el.innerText.includes("--")) return;
+        Array.from(el.parentElement.children).forEach(c => c.classList.remove('winner'));
+        el.classList.add('winner');
+        const target = document.getElementById(nextId);
+        target.innerText = el.innerText;
+        target.classList.remove('winner');
+    }
 </script>
 </body>
 </html>
